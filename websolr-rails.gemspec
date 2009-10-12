@@ -24,7 +24,8 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "lib/websolr-rails.rb",
-     "lib/websolr.rb"
+     "lib/websolr.rb",
+     "websolr-rails.gemspec"
   ]
   s.homepage = %q{http://github.com/onemorecloud/websolr-rails}
   s.rdoc_options = ["--charset=UTF-8"]
