@@ -38,7 +38,7 @@ if ENV["WEBSOLR_URL"]
   rescue LoadError
   end
   
-  module Kernel
+  module Kernel #:nodoc: all
     alias_method :require_without_solr_hooks, :require
     def require(string)
       require_without_solr_hooks(string)
