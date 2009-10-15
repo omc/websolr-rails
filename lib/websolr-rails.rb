@@ -1,7 +1,8 @@
 # Post-require hooks for acts_as_solr and sunspot if this 
 # gem is loaded and WEBSOLR_URL is defined.
 
-if ENV["WEBSOLR_URL"]
+if ENV["WEBSOLR_URL"] && !$websolr_already
+  $websolr_already = true
   
   def websolr_install_sunspot
     Sunspot.config.solr.url = ENV["WEBSOLR_URL"]
