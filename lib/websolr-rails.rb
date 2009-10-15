@@ -29,13 +29,13 @@ if ENV["WEBSOLR_URL"]
   begin
     ActsAsSolr
     websolr_install_acts_as_solr
-  rescue LoadError
+  rescue NameError
   end
 
   begin
     Sunspot
     websolr_install_acts_as_solr
-  rescue LoadError
+  rescue NameError
   end
   
   module Kernel #:nodoc: all
