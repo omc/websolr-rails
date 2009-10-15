@@ -34,7 +34,7 @@ if ENV["WEBSOLR_URL"]
             connection = Solr::Connection.new(ENV["WEBSOLR_URL"])
             return connection.send(request)
           rescue 
-            raise "Couldn't connect to the Solr server at \#{url}. \#{$!}"
+            raise "Couldn't connect to the Solr server at #{url}. #{$!}"
             false
           end
         end
