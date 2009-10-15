@@ -5,10 +5,12 @@ if ENV["WEBSOLR_URL"] && !$websolr_already
   $websolr_already = true
   
   def websolr_install_sunspot
+    puts "Using websolr-rails for sunspot at #{ENV["WEBSOLR_URL"]}"
     Sunspot.config.solr.url = ENV["WEBSOLR_URL"]
   end
     
   def websolr_install_acts_as_solr
+    puts "Using websolr-rails for acts_as_solr at #{ENV["WEBSOLR_URL"]}"
     eval <<-RUBY
       module ::ActsAsSolr
         class Post        
