@@ -24,23 +24,24 @@ if ENV["WEBSOLR_URL"]
   rescue LoadError
     #ignore
   end
-  
-  def websolr_install_acts_as_solr
-    eval <<-RUBY
-      module ActsAsSolr
-        class Post        
-          def self.execute(request)
-            begin
-              connection = Solr::Connection.new(ENV["WEBSOLR_URL"])
-              return connection.send(request)
-            rescue 
-              raise "Couldn't connect to the Solr server at \#{url}. \#{$!}"
-              false
-            end
+
+  begin
+    require "acts_as_solr"
+    module ActsAsSolr
+      class Post        
+        def self.execute(request)
+          begin
+            connection = Solr::Connection.new(ENV["WEBSOLR_URL"])
+            return connection.send(request)
+          rescue 
+            raise "Couldn't connect to the Solr server at \#{url}. \#{$!}"
+            false
           end
         end
       end
-    RUBY
+    end
+  rescue LoadError
+    #ignore
   end
 
 end
