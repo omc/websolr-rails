@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{websolr-rails}
-  s.version = "2.1.2"
+  s.version = "2.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kyle Maxwell"]
-  s.date = %q{2009-10-15}
+  s.date = %q{2009-10-17}
   s.description = %q{Makes Sunspot and acts_as_solr play with WebSolr}
   s.email = %q{kyle@kylemaxwell.com}
   s.extra_rdoc_files = [
