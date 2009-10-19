@@ -26,10 +26,9 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "bin/websolr",
+     "lib/plain_option_parser.rb",
      "lib/websolr-rails.rb",
      "lib/websolr.rb",
-     "lib/websolr_controller.rb",
-     "lib/websolr_option_parser.rb",
      "websolr-rails.gemspec"
   ]
   s.homepage = %q{http://github.com/onemorecloud/websolr-rails}
