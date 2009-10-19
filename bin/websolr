@@ -1,10 +1,40 @@
 #!/usr/bin/env ruby
-require File.dirname(__FILE__) + "/../lib/websolr_option_parser"
-require File.dirname(__FILE__) + "/../lib/websolr_controller"
+require File.dirname(__FILE__) + "/../lib/plain_option_parser"
+require "rubygems"
+require "restclient"
+
+HOST = ENV["WEBSOLR_HOST"] || "websolr.com"
 
 PWD = File.expand_path(".")
-
-parser = WebsolrOptionParser.new
-parser.parse!
-controller = WebsolrController.new(parser)
-controller.start
+controller = PlainOptionParser.new(ARGV) do
+  def die(s)
+    STDERR.puts(s.strip)
+    exit(1)
+  end
+  
+  def init_heroku
+    puts "Getting username and password from Heroku config ... "
+    cfg = `heroku config`
+    @user = cfg[/WEBSOLR_USER\s*=>\s*(\S+)/, 1]
+    @pass = cfg[/WEBSOLR_PWD\s*=>\s*(\S+)/, 1]
+    unless @user && @pass
+      die <<-STR
+Cannot retrieve username and password.  Are you inside a Heroku app folder 
+with the Websolr addon enabled?
+      STR
+    end
+    @url = "http://#{@user}:#{@pass}@#{HOST}/users/set_default_slice_client"
+  end
+  
+  desc "shows your heroku-created index"
+  cmd "heroku show client" do
+    init_heroku
+    RestClient.post @url
+  end
+  
+  desc "sets the client to use"
+  cmd "heroku set client", "[sunspot|acts_as_solr]" do |client|
+    init_heroku
+    RestClient.post @url, :client => client
+  end
+end.start
