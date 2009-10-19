@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + "/../lib/plain_option_parser"
 require "rubygems"
 require "restclient"
 
-HOST = ENV["WEBSOLR_HOST"] || "websolr.com"
+HOST = "www.websolr.com"
 
 PWD = File.expand_path(".")
 controller = PlainOptionParser.new(ARGV) do
@@ -23,18 +23,18 @@ Cannot retrieve username and password.  Are you inside a Heroku app folder
 with the Websolr addon enabled?
       STR
     end
-    @url = "http://#{@user}:#{@pass}@#{HOST}/users/set_default_slice_client"
+    @url = "http://#{@user}:#{@pass}@#{HOST}/users/default_slice_client"
   end
   
   desc "shows your heroku-created index"
   cmd "heroku show client" do
     init_heroku
-    RestClient.post @url
+    puts RestClient.get(@url)
   end
   
   desc "sets the client to use"
   cmd "heroku set client", "[sunspot|acts_as_solr]" do |client|
     init_heroku
-    RestClient.post @url, :client => client
+    puts RestClient.post(@url, :client => client)
   end
 end.start
