@@ -39,7 +39,7 @@ class PlainOptionParser
   def pretty_print(cmds)
     mapped = cmds.map do |cmd|
       name, desc, additional, block = cmd
-      ["  #{$0} " + name.join(" ") + " #{additional}", " -- #{desc}"]
+      ["  #{File.basename($0)} " + name.join(" ") + " #{additional}", " -- #{desc}"]
     end
     max = mapped.inject(0) do |memo, entry|
       memo > entry.first.length ? memo : entry.first.length
