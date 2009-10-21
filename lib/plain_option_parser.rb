@@ -52,8 +52,6 @@ class PlainOptionParser
 private
   
   def usage
-    puts "Usage: #{$0} COMMANDS"
-    puts 
     puts "COMMANDS: "
   end
   
