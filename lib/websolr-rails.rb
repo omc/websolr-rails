@@ -5,6 +5,7 @@ if ENV["WEBSOLR_URL"]
   require "uri"
   
   begin
+    require "sunspot/rails"
     require "sunspot/rails/configuration"
     require "sunspot/rails/searchable"
     require "sunspot/rails/request_lifecycle"
