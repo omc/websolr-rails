@@ -37,10 +37,16 @@ if ENV["WEBSOLR_URL"]
             def included(base) #:nodoc:
               base.after_filter do
                 begin
+                  # Sunspot moved the location of the commit_if_dirty method around.
+                  # Let's support multiple versions for now.
+                  session = Sunspot::Rails.respond_to?(:master_session) ? 
+                              Sunspot::Rails.master_session : 
+                              Sunspot
+                              
                   if Sunspot::Rails.configuration.auto_commit_after_request?
-                    Sunspot::Rails.master_session.commit_if_dirty
+                    session.commit_if_dirty
                   elsif Sunspot::Rails.configuration.auto_commit_after_delete_request?
-                    Sunspot::Rails.master_session.commit_if_delete_dirty
+                    session.commit_if_delete_dirty
                   end
                 rescue Exception => e
                   ActionController::Base.logger.error e.message

@@ -18,6 +18,10 @@ initializer, etc:
   # WEBSOLR_URL must already be defined.
   require "websolr-rails"
 
+== Semantic Versioning
+
+This library obeys the definition of "Semantic Versioning" at http://semver.org/.  YMMV with its dependencies.
+
 == Copyright
 
 Copyright (c) 2009 Kyle Maxwell. See LICENSE for details.
