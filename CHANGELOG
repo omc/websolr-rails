@@ -1,3 +1,3 @@
 2.3.3
 - added a CHANGELOG
-- Fixed "master_session" bug with Sunspot
+- Fixed "master_session" bug with Sunspot (via notch8)
