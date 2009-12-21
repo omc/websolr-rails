@@ -1,3 +1,5 @@
+2.4.0
+- added the --app option for heroku users
 2.3.3
 - added a CHANGELOG
 - Fixed "master_session" bug with Sunspot (via notch8)
