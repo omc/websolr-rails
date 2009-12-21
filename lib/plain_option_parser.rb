@@ -1,5 +1,7 @@
 class PlainOptionParser
-  def initialize(args, &block)
+  attr_reader :flags
+  
+  def initialize(&block)
     @commands = []
     desc "Prints help text for your command"
     cmd "help" do
@@ -10,15 +12,13 @@ class PlainOptionParser
         pretty_print viable
       end
     end
-    @args = args
     instance_eval(&block)
   end
 
-  def start
-    viable, remaining = commands_for_args(@args)
+  def start(args)
+    viable, remaining = commands_for_args(args)
     if viable.length == 1
       viable[0].last.call(*remaining)
-      exit 0
     elsif viable.length == 0
       no_match
     else
@@ -55,7 +55,29 @@ private
     puts "COMMANDS: "
   end
   
+  
+  KV_FLAG = /--(.*)=(.*)/
+  K_FLAG  =  /--(.*)/
+  def strip_flags(args)
+    @flags ||= {}
+    @prev = nil
+    args.map do |arg|
+      if arg =~ KV_FLAG
+        @flags[$1] = $2
+        nil
+      elsif @prev            
+        @flags[@prev] = arg
+        @prev = nil
+      elsif @prev = arg[K_FLAG, 1]
+        nil
+      else
+        arg
+      end
+    end.compact
+  end
+  
   def commands_for_args(args)
+    args = strip_flags(args)
     viable = @commands.dup
     args.each_with_index do |arg, i|
       @commands.each do |cmd|
@@ -63,7 +85,7 @@ private
         viable.delete(cmd) if name[i] != arg
       end
       if viable.length == 1
-        return [viable, args[viable[0][0].length, @args.length]]
+        return [viable, args[viable[0][0].length, args.length]]
       end
     end
     return [viable, []]

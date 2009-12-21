@@ -6,7 +6,7 @@ require "restclient"
 HOST = "www.websolr.com"
 
 PWD = File.expand_path(".")
-controller = PlainOptionParser.new(ARGV) do
+controller = PlainOptionParser.new do
   def die(s)
     STDERR.puts(s.strip)
     exit(1)
@@ -14,7 +14,8 @@ controller = PlainOptionParser.new(ARGV) do
   
   def init_heroku
     puts "Getting username and password from Heroku config ... "
-    cfg = `heroku config`
+    app = flags["app"] ? "--app=#{flags["app"]}" : ""
+    cfg = `heroku config #{app}`
     @user = cfg[/WEBSOLR_USER\s*=>\s*(\S+)/, 1]
     @pass = cfg[/WEBSOLR_PWD\s*=>\s*(\S+)/, 1]
     unless @user && @pass
@@ -37,4 +38,4 @@ with the Websolr addon enabled?
     init_heroku
     puts RestClient.post(@url, :client => client)
   end
-end.start
+end.start(ARGV)
